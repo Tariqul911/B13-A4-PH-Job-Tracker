@@ -1,0 +1,88 @@
+<!doctype html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind and Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+    <!-- Font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            font-family: "Geist", sans-serif;
+        }
+    </style>
+    <title>Job Application Tracker</title>
+</head>
+
+<body class="mx-[70px]">
+    <h2 class="text-5xl text-[#002C5C] font-bold mt-[50px]">Job Application Tracker</h2>
+
+    <section class="grid grid-cols-3 gap-4  mt-6 border-b-2 border-gray-300/50 pb-10">
+
+        <div class="px-6 py-4 bg-amber-50 rounded-xl">
+            <p class="text-xl">Total</p>
+            <p class="text-3xl text-[#002C5C]">8</p>
+        </div>
+
+        <div class="px-6 py-4 bg-amber-50 rounded-xl">
+            <p class="text-xl">Interview</p>
+            <p class="text-3xl text-[#10B981]">0</p>
+        </div>
+
+        <div class="px-6 py-4 bg-amber-50 rounded-xl">
+            <p class="text-xl">Rejected</p>
+            <p class="text-3xl text-[#EF4444]">0</p>
+        </div>
+
+    </section>
+
+    <!-- section title with button -->
+    <section class="my-6">
+         <div class="flex justify-between pb-4">
+            <h2 class="text-2xl text-[#002C5C] font-bold">Available Jobs</h2>
+            <p class="text-xl">8 jobs</p>
+         </div>
+         <div class="space-x-3">
+         <button class="btn btn-soft btn-primary w-[100px]">All</button>
+         <button class="btn btn-soft btn-primary">Interview</button>
+         <button class="btn btn-soft btn-primary">Rejected</button>
+         </div>
+    </section>
+
+    <!-- Available Jobs Container -->
+    <section class="bg-amber-50 p-10 mt-6 rounded-xl">
+       
+        <div>
+            <div class="flex justify-between">
+                <div>
+
+                <h2 class="text-2xl font-bold text-[#002C5C]">Mobile First Corp</h2>
+                <p class="text-[#64748B]">React Native Developer</p>
+                </div>
+
+                <div><i class="fa-regular fa-trash-can"></i></div>
+
+            </div>
+
+            <p class="text-[#64748B] py-3">Remote • Full-time • $130,000 - $175,000</p>
+            <button class="btn btn-soft btn-primary">Not Applied</button>
+            <p class="text-[#323B49] py-3">Build cross-platform mobile applications using React Native. Work on products
+                used by millions of users worldwide.</p>
+        </div>
+        <div class="space-x-3">
+            <button class="btn btn-outline btn-success">interview</button>
+            <button class="btn btn-outline btn-secondary">Rejected</button>
+        </div>
+    </section>
+</body>
+
+</html>
