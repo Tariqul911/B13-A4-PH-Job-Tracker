@@ -30,17 +30,17 @@
 
         <div class="px-6 py-4 bg-amber-50 rounded-xl">
             <p class="text-xl">Total</p>
-            <p class="text-3xl text-[#002C5C]">8</p>
+            <p class="text-3xl text-[#002C5C]" id="total-count">8</p>
         </div>
 
         <div class="px-6 py-4 bg-amber-50 rounded-xl">
             <p class="text-xl">Interview</p>
-            <p class="text-3xl text-[#10B981]">0</p>
+            <p class="text-3xl text-[#10B981]" id="interview-count">0</p>
         </div>
 
         <div class="px-6 py-4 bg-amber-50 rounded-xl">
             <p class="text-xl">Rejected</p>
-            <p class="text-3xl text-[#EF4444]">0</p>
+            <p class="text-3xl text-[#EF4444]" id="rejected-count">0</p>
         </div>
 
     </section>
@@ -49,19 +49,20 @@
     <section class="my-6">
          <div class="flex justify-between pb-4">
             <h2 class="text-2xl text-[#002C5C] font-bold">Available Jobs</h2>
-            <p class="text-xl">8 jobs</p>
+            <p class="text-xl"><span id="tab-count">8</span> jobs</p>
          </div>
          <div class="space-x-3">
-         <button class="btn btn-soft btn-primary w-[100px]">All</button>
-         <button class="btn btn-soft btn-primary">Interview</button>
-         <button class="btn btn-soft btn-primary">Rejected</button>
+         <button id="tab-all" class="btn btn-soft btn-primary w-[100px]">All</button>
+         <button id="tab-interview" class="btn btn-soft btn-primary">Interview</button>
+         <button id="tab-rejected" class="btn btn-soft btn-primary">Rejected</button>
          </div>
     </section>
 
     <!-- Available Jobs Container -->
     <section class="bg-amber-50 p-10 mt-6 rounded-xl">
        
-        <div>
+        <div id="jobs-container" class="space-y-6"></div>
+        <!-- <div>
             <div class="flex justify-between">
                 <div>
 
@@ -81,8 +82,10 @@
         <div class="space-x-3">
             <button class="btn btn-outline btn-success">interview</button>
             <button class="btn btn-outline btn-secondary">Rejected</button>
-        </div>
+        </div> -->
     </section>
+
+    <script src="script/script.js"></script>
 </body>
 
 </html>
