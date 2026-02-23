@@ -106,3 +106,18 @@ const tabCountEl = document.getElementById("tab-count");
 const tabAllBtn = document.getElementById("tab-all");
 const tabInterviewBtn = document.getElementById("tab-interview"); 
 const tabRejectedBtn = document.getElementById("tab-rejected");
+
+
+function updateDashboardCounts() {
+  let interview = 0;
+  let rejected = 0;
+
+  for (let i = 0; i < jobs.length; i++) {
+    if (jobs[i].status === "Interview") interview++;
+    if (jobs[i].status === "Rejected") rejected++;
+  }
+
+  totalCountEl.innerText = jobs.length;
+  interviewCountEl.innerText = interview;
+  rejectedCountEl.innerText = rejected;
+}
