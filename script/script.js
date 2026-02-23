@@ -121,3 +121,20 @@ function updateDashboardCounts() {
   interviewCountEl.innerText = interview;
   rejectedCountEl.innerText = rejected;
 }
+
+function renderJobs() {
+  let html = "";
+
+  for (let i = 0; i < jobs.length; i++) {
+    const job = jobs[i];
+
+    html += `
+      <div class="bg-white p-6 rounded-xl border">
+        <h2 class="text-xl font-bold">${job.companyName}</h2>
+        <p>${job.position}</p>
+      </div>
+    `;
+  }
+
+  jobsContainer.innerHTML = html;
+}
