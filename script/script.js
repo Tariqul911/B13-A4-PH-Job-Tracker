@@ -301,6 +301,32 @@ tabRejectedBtn.addEventListener("click", function () {
   changeTab("Rejected");
 });
 
+// --------- Event Delegation ---------
+jobsContainer.addEventListener("click", function (e) {
+  const target = e.target;
+
+  // button or icon click handle
+  const btn = target.closest("button");
+  if (!btn) return;
+
+  const action = btn.getAttribute("data-action");
+  const id = btn.getAttribute("data-id");
+
+  if (!action || !id) return;
+
+  if (action === "interview") {
+    setJobStatus(id, "Interview");
+  }
+
+  if (action === "rejected") {
+    setJobStatus(id, "Rejected");
+  }
+
+  if (action === "delete") {
+    deleteJob(id);
+  }
+});
+
 // ---------- Initial render --------------
 updateDashboardCounts();
 setActiveTabStyle();
