@@ -138,3 +138,18 @@ function renderJobs() {
 
   jobsContainer.innerHTML = html;
 }
+
+tabAllBtn.addEventListener("click", function () {
+  currentTab = "All";
+  renderJobs();
+});
+
+tabInterviewBtn.addEventListener("click", function () {
+  currentTab = "Interview";
+  renderJobs();
+});
+
+tabRejectedBtn.addEventListener("click", function () {
+  currentTab = "Rejected";
+  renderJobs();
+});
