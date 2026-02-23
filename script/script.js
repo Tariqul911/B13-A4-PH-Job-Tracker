@@ -1,4 +1,3 @@
-
 // --------- Jobs Data (8 items) ----------
 const jobs = [
   {
@@ -107,6 +106,18 @@ const tabAllBtn = document.getElementById("tab-all");
 const tabInterviewBtn = document.getElementById("tab-interview"); 
 const tabRejectedBtn = document.getElementById("tab-rejected");
 
+function getCounts() {
+  const total = jobs.length;
+  let interview = 0;
+  let rejected = 0;
+
+  for (let i = 0; i < jobs.length; i++) {
+    if (jobs[i].status === "Interview") interview++;
+    if (jobs[i].status === "Rejected") rejected++;
+  }
+
+  return { total, interview, rejected };
+}
 
 function updateDashboardCounts() {
   let interview = 0;
@@ -122,34 +133,178 @@ function updateDashboardCounts() {
   rejectedCountEl.innerText = rejected;
 }
 
+function getFilteredJobs() {
+  if (currentTab === "All") return jobs;
+  if (currentTab === "Interview") return jobs.filter((j) => j.status === "Interview");
+  if (currentTab === "Rejected") return jobs.filter((j) => j.status === "Rejected");
+  return jobs;
+}
+
+function updateDashboardCounts() {
+  const counts = getCounts();
+  totalCountEl.innerText = counts.total;
+  interviewCountEl.innerText = counts.interview;
+  rejectedCountEl.innerText = counts.rejected;
+}
+
+function updateTabCount() {
+  const filtered = getFilteredJobs();
+  tabCountEl.innerText = filtered.length;
+}
+
+function setActiveTabStyle() {
+  // active styling (daisyUI)
+  const all = [tabAllBtn, tabInterviewBtn, tabRejectedBtn];
+  for (let i = 0; i < all.length; i++) {
+    all[i].classList.remove("btn-primary");
+    all[i].classList.add("btn-ghost");
+  }
+
+  if (currentTab === "All") {
+    tabAllBtn.classList.add("btn-primary");
+    tabAllBtn.classList.remove("btn-ghost");
+  }
+  if (currentTab === "Interview") {
+    tabInterviewBtn.classList.add("btn-primary");
+    tabInterviewBtn.classList.remove("btn-ghost");
+  }
+  if (currentTab === "Rejected") {
+    tabRejectedBtn.classList.add("btn-primary");
+    tabRejectedBtn.classList.remove("btn-ghost");
+  }
+}
+
+function renderEmptyState() {
+  jobsContainer.innerHTML = `
+    <div class="flex flex-col items-center justify-center py-14 text-center">
+      <i class="fa-regular fa-folder-open text-5xl text-[#64748B] mb-4"></i>
+      <h3 class="text-2xl font-bold text-[#002C5C]">No jobs Available</h3>
+      <p class="text-[#64748B] mt-2">Check back soon for new job opportunities</p>
+    </div>
+  `;
+}
 function renderJobs() {
+  const filtered = getFilteredJobs();
+
+  if (currentTab !== "All" && filtered.length === 0) {
+    renderEmptyState();
+    updateTabCount();
+    return;
+  }
+
   let html = "";
 
-  for (let i = 0; i < jobs.length; i++) {
-    const job = jobs[i];
+  for (let i = 0; i < filtered.length; i++) {
+    const job = filtered[i];
+
+    const isInterview = job.status === "Interview";
+    const isRejected = job.status === "Rejected";
 
     html += `
-      <div class="bg-white p-6 rounded-xl border">
-        <h2 class="text-xl font-bold">${job.companyName}</h2>
-        <p>${job.position}</p>
+      <div class="bg-white rounded-xl p-6 border border-gray-200/70">
+        <div class="flex justify-between items-start">
+          <div>
+            <h2 class="text-2xl font-bold text-[#002C5C]">${job.companyName}</h2>
+            <p class="text-[#64748B]">${job.position}</p>
+          </div>
+
+          <button class="btn btn-ghost btn-sm" data-action="delete" data-id="${job.id}" title="Delete">
+            <i class="fa-regular fa-trash-can text-lg"></i>
+          </button>
+        </div>
+
+        <p class="text-[#64748B] py-3">${job.location} • ${job.type} • ${job.salary}</p>
+
+        <div class="pb-3">
+          ${
+            job.status
+              ? `<span class="badge ${isInterview ? "badge-success" : "badge-error"} badge-outline">
+                    Status: ${job.status}
+                 </span>`
+              : `<span class="badge badge-neutral badge-outline">Status: Not Applied</span>`
+          }
+        </div>
+
+        <p class="text-[#323B49] pb-4">${job.description}</p>
+
+        <div class="flex flex-wrap gap-3">
+          <button
+            class="btn btn-outline btn-success"
+            data-action="interview"
+            data-id="${job.id}"
+          >
+            Interview
+          </button>
+
+          <button
+            class="btn btn-outline btn-secondary"
+            data-action="rejected"
+            data-id="${job.id}"
+          >
+            Rejected
+          </button>
+        </div>
       </div>
     `;
   }
 
   jobsContainer.innerHTML = html;
+
+  updateTabCount();
 }
 
-tabAllBtn.addEventListener("click", function () {
-  currentTab = "All";
+function changeTab(tabName) {
+  currentTab = tabName;
+  setActiveTabStyle();
   renderJobs();
+}
+
+function setJobStatus(jobId, newStatus) {
+  // newStatus: "Interview" or "Rejected"
+  const id = Number(jobId);
+
+  for (let i = 0; i < jobs.length; i++) {
+    if (jobs[i].id === id) {
+      jobs[i].status = newStatus;
+      break;
+    }
+  }
+
+  updateDashboardCounts();
+
+  changeTab(newStatus);
+}
+
+function deleteJob(jobId) {
+  const id = Number(jobId);
+
+  // remove from array
+  const index = jobs.findIndex((j) => j.id === id);
+  if (index !== -1) {
+    jobs.splice(index, 1);
+  }
+
+  updateDashboardCounts();
+  renderJobs(); // keep same currentTab
+}
+
+// --------- Event Listeners ----------
+tabAllBtn.addEventListener("click", function () {
+  changeTab("All");
 });
 
 tabInterviewBtn.addEventListener("click", function () {
-  currentTab = "Interview";
-  renderJobs();
+  changeTab("Interview");
 });
 
 tabRejectedBtn.addEventListener("click", function () {
-  currentTab = "Rejected";
-  renderJobs();
+  changeTab("Rejected");
 });
+
+// ---------- Initial render --------------
+updateDashboardCounts();
+setActiveTabStyle();
+renderJobs();
+
+
+
